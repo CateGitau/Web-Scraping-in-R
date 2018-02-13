@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1518337388740.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "C6A2B73E",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1518337388740,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "C0FA8D47",
+        "caption" : "actress_data",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=actress_data&cache_key=C0FA8D47",
+        "displayedObservations" : "69",
+        "environment" : "",
+        "object" : "actress_data",
+        "preview" : "0",
+        "totalObservations" : "69",
+        "variables" : "1"
+    },
+    "relative_order" : 12,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

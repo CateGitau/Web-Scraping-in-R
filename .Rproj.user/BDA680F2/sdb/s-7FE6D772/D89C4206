@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "#install package rvest\ninstall.packages(\"rvest\")\n\n#load the libraries\nlibrary(rvest)\nlibrary(RCurl)\nlibrary(XML)\nlibrary(magrittr)\nlibrary(dplyr)\n\n#extracting links to american film acresses\nurl<-\"https://en.wikipedia.org/wiki/List_of_American_film_actresses\"\nurl2<-getURL(url)\nparsed<-htmlParse(url2)\nlinks<-xpathSApply(parsed,path = \"//a\",xmlGetAttr,\"href\")\n\ndf <- as.data.frame(matrix(unlist(links), nrow=2011, byrow=T),stringsAsFactors=FALSE)\nstring <- as.character(df$V1)\ndf <- as.data.frame(paste0(\"https://en.wikipedia.org\", string))\ncolnames(df) <- \"list\"\n\n#create empty data frame\ndata <- as.data.frame(matrix(ncol=1))\n\n#define column names\ncols <-c('topic')\n\n#assign column names\ncolnames(data) <-c(cols)\n\n# df <- read.csv(\"D:/Ongair/tal/Wikipedia/actresses.csv\")\n\nfor(i in 1:nrow(df)) {\n  tryCatch({\n  row <- as.character(df[i,])\n  \n  webpage <- read_html(row)\n  results <- webpage %>% html_nodes(\"table.vcard\") %>% html_table(trim = TRUE) %>% ifelse(. == \"\", NA, .)\n  \n  if (is.logical(results) && length(results) == 0) next\n  \n  #  a <- bind_rows(lapply(xml_attrs(results), function(x) data.frame(as.list(x), stringsAsFactors=FALSE)))\n  # \n  # if(!is.data.frame(a) || !nrow(a)) next\n  \n  table <- webpage %>%\n    html_nodes(\"table.vcard\") %>%\n    html_table(header=F)\n  table <- table[[1]]\n  \n  # You can clean up the table with the following code, or something like it. \n  # table[[1]]\n  dict <- as.data.frame(table)\n  dict[1, 1] <- NA\n  \n  if(dict[3,1]==\"Born\"){\n    dict <- dict[-c(2), ]\n  }\n  \n  colnames(dict) <- c(\"topic\",dict[1,2])\n  \n  data <- merge(data, dict, by=\"topic\", all = T)\n  }, error=function(e){cat(\"ERROR :\",conditionMessage(e), \"\\n\")})\n  \n  \n  print(i)\n  \n}\n",
+    "created" : 1518194307052.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3199570832",
+    "id" : "D89C4206",
+    "lastKnownWriteTime" : 1518522841,
+    "last_content_update" : 1518523002415,
+    "path" : "D:/Ongair/tal/Wikipedia/web-scrape2.R",
+    "project_path" : "web-scrape2.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

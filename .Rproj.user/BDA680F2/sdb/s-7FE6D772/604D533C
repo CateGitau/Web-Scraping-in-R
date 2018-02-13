@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "#install package rvest\ninstall.packages(\"rvest\")\n\n#load the librarys\nlibrary(rvest)\nlibrary(RCurl)\nlibrary(XML)\nlibrary(magrittr)\n\n#extracting links to american film acresses\nurl<-\"https://en.wikipedia.org/wiki/List_of_American_film_actresses\"\nurl2<-getURL(url)\nparsed<-htmlParse(url2)\nlinks<-xpathSApply(parsed,path = \"//a\",xmlGetAttr,\"href\")\n\ndf <- as.data.frame(matrix(unlist(links), nrow=2011, byrow=T),stringsAsFactors=FALSE)\nstring <- as.character(df$V1)\ndf <- as.data.frame(paste0(\"https://en.wikipedia.org\", string))\ncolnames(df) <- \"list\"\n\ndf <- read.csv(\"D:/Ongair/tal/Wikipedia/actresses.csv\")\n\n#create empty data frame\ndata <- as.data.frame(matrix(ncol=1))\n\n#define column names\ncols <-c('actresses')\n\n#assign column names\ncolnames(data) <-c(cols)\n\nfor(i in 1:nrow(df)) {\n  row <- as.character(df[i,])\n  \n#Specifying the url for desired website to be scrapped\nurl <- row\n\n#Reading the HTML code from the website\nwebpage <- read_html(url)\n\n#Using CSS selectors to scrap the rankings section\nactress_data_html <- html_nodes(webpage,'.fn')\n\n#Converting the ranking data to text\nactress_data <- as.data.frame(html_text(actress_data_html))\ncolnames(actress_data) <- \"actresses\"\n\n#mapping\ndata$link[i] = df$list\n\ndata <- rbind(data,actress_data)\nprint(i)\n\n}\n\n#scraping a table from a\nhead(rank_data)\n\nwebpage <- read_html(\"https://en.wikipedia.org/wiki/Brooke_Adams_(actress)\")\nresults <- webpage %>% html_nodes(\"table.vcard\")\nresults\n\ntable <- webpage %>%\n  html_nodes(\"table.vcard\") %>%\n  html_table(header=T)\n\n# You can clean up the table with the following code, or something like it. \n# table[[1]]\ndict <- as.data.frame(table)\naccounts_df <- table[[1]][1:6,-1]\n\nnames <- c('name', 'desc')\ncolnames(accounts_df) <- names\n\naccounts_df #%>% str()",
+    "created" : 1518087389594.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2585310735",
+    "id" : "604D533C",
+    "lastKnownWriteTime" : 1518204385,
+    "last_content_update" : 1518204385,
+    "path" : "D:/Ongair/tal/Wikipedia/web-scrape.R",
+    "project_path" : "web-scrape.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "header.true <- function(df) {\n  names(df) <- as.character(unlist(df[1,]))\n  df[-1,]\n}\n\ndf1 <- data.frame(c(\"a\", 1,2,3), c(\"b\", 4,5,6))\nheader.true(df1)\na b\n2 1 4\n3 2 5\n4 3 6",
+    "created" : 1518326228400.000,
+    "dirty" : true,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "2994926251",
+    "id" : "B2615CF2",
+    "lastKnownWriteTime" : 13229740524109924,
+    "last_content_update" : 1518334984260,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 11,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
