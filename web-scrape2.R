@@ -34,7 +34,7 @@ for(i in 1:nrow(df)) {
   tryCatch({
   row <- as.character(df[i,])
   
-  webpage <- read_html("https://en.wikipedia.org/wiki/Brooke_Adams_(actress)")
+  webpage <- read_html("https://en.wikipedia.org/wiki/Amy_Adams")
   results <- webpage %>% html_nodes("table.vcard") %>% html_table(trim = TRUE) %>% ifelse(. == "", NA, .)
   
   if (is.logical(results) && length(results) == 0) next
@@ -58,6 +58,7 @@ for(i in 1:nrow(df)) {
   }
   
   colnames(dict) <- c("topic",dict[1,2])
+  dict <- dict[-1,] 
   
   data <- merge(data, dict, by="topic", all = T)
   }, error=function(e){cat("ERROR :",conditionMessage(e), "\n")})
